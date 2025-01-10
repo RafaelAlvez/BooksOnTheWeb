@@ -3,9 +3,9 @@
 BEGIN;
 
 -- Conexão ao banco de dados
-\c booksontheweb;
+-- \c booksontheweb;
 
--- Tabela de Usuáriosx
+-- Tabela de Usuários
 DO $$ BEGIN
     RAISE NOTICE 'Criando a tabela usuarios...';
 END $$;
