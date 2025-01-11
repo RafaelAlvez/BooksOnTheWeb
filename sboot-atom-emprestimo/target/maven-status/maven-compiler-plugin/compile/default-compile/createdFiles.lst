@@ -1,0 +1,11 @@
+br/com/books/web/emprestimo/service/impl/ReservaServiceImpl.class
+br/com/books/web/emprestimo/service/ReservaService.class
+br/com/books/web/emprestimo/model/Penalidade.class
+br/com/books/web/emprestimo/repository/LivroRepository.class
+br/com/books/web/emprestimo/repository/PenalidadeRepository.class
+br/com/books/web/emprestimo/controller/ReservaController.class
+br/com/books/web/emprestimo/model/Reserva.class
+br/com/books/web/emprestimo/model/Livro.class
+br/com/books/web/emprestimo/repository/ReservaRepository.class
+br/com/books/web/emprestimo/MainApplication.class
+br/com/books/web/emprestimo/config/OpenApiConfig.class
