@@ -30,19 +30,19 @@ DO $$ BEGIN
     RAISE NOTICE 'Inserindo dados na tabela livro...';
 END $$;
 
-INSERT INTO livro (titulo, autor, genero, status_id) VALUES
-('O Senhor dos Anéis', 'J.R.R. Tolkien', 'Fantasia', 1),
-('1984', 'George Orwell', 'Ficção Científica', 1),
-('Dom Casmurro', 'Machado de Assis', 'Romance', 2),
-('O Pequeno Príncipe', 'Antoine de Saint-Exupéry', 'Infantil', 1),
-('A Guerra dos Tronos', 'George R.R. Martin', 'Fantasia', 3);
+INSERT INTO livro (titulo, autor, genero, status_id, criado_em) VALUES
+('O Senhor dos Anéis', 'J.R.R. Tolkien', 'Fantasia', 1, now()),
+('1984', 'George Orwell', 'Ficção Científica', 1, now()),
+('Dom Casmurro', 'Machado de Assis', 'Romance', 2, now()),
+('O Pequeno Príncipe', 'Antoine de Saint-Exupéry', 'Infantil', 1, now()),
+('A Guerra dos Tronos', 'George R.R. Martin', 'Fantasia', 3, now());
 
 -- Inserir empréstimos
 DO $$ BEGIN
     RAISE NOTICE 'Inserindo dados na tabela emprestimo...';
 END $$;
 
-INSERT INTO emprestimos (usuario_id, livro_id, data_emprestimo, data_devolucao_prevista, data_devolucao_real, devolvido) VALUES
+INSERT INTO emprestimo (usuario_id, livro_id, data_emprestimo, data_devolucao_prevista, data_devolucao_real, devolvido) VALUES
 (1, 1, '2025-01-01', '2025-01-10', '2025-01-10', FALSE),
 (2, 2, '2025-01-02', '2025-01-12', '2025-01-10', FALSE),
 (3, 3, '2025-01-03', '2025-01-15', '2025-01-19', TRUE),

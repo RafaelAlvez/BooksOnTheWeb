@@ -11,4 +11,5 @@ public class DevolucaoResponseDTO {
     private boolean penalizado;
     private Penalidade penalidade;
     private String message;
+    private boolean devolvido;
 }

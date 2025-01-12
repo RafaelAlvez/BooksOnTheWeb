@@ -44,6 +44,6 @@ public class EmprestimoServiceImpl implements EmprestimoService {
             throw new RuntimeException("Emprestimo não encontrado");
         }
         var penalidade = penalidadeService.verificarPenalidade(emprestimo);
-        return new DevolucaoResponseDTO(penalidade != null, penalidade, "");
+        return new DevolucaoResponseDTO(penalidade != null, penalidade, "", true);
     }
 }
