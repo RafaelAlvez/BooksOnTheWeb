@@ -7,22 +7,15 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "livro")
+@Table(name = "status_livro")
 @Data
 @NoArgsConstructor
-public class Livro {
+public class StatusLivro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String titulo;
-    @Column(nullable = false)
-    private String autor;
-    @Column(nullable = false)
-    private String genero;
-    @ManyToOne
-    @JoinColumn(name = "status_id", nullable = false)
-    private StatusLivro status;
+    private String descricao;
     @Column(name = "criado_em", nullable = false, updatable = false)
     private LocalDateTime dataCriacao;
     @Column(name = "atualizado_em")

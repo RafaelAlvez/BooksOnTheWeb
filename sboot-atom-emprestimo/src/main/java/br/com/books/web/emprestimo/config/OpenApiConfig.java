@@ -13,7 +13,7 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Fitz Api Definition")
+                        .title("BooksOnTheWeb Api Definition")
                         .version("1.0"))
                 .addServersItem(new Server().url("http://localhost:8080"));
     }

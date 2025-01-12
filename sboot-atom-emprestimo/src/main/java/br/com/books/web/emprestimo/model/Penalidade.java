@@ -13,10 +13,11 @@ public class Penalidade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
-    private Reserva reserva;
-
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
+    @Column(nullable = false, precision = 19, scale = 4)
     private BigDecimal valor;
+    @Column(name = "data_aplicacao", nullable = false)
     private LocalDate dataAplicacao;
 }
