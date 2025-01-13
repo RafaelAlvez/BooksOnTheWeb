@@ -1,4 +1,4 @@
-name: CI Workflow
+name: CI Workflow - Usuarios
 
 on:
   push:
@@ -17,4 +17,4 @@ jobs:
           java-version: '21'
           distribution: 'adopt'
       - name: Build with Maven
-        run: mvn -f sboot-atom-emprestimo/pom.xml clean install --no-transfer-progress
+        run: mvn -f sboot-atom-usuarios/pom.xml clean install --no-transfer-progress
