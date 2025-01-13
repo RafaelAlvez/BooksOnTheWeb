@@ -29,7 +29,7 @@ public class Emprestimo {
     @Column(nullable = false)
     private Boolean devolvido = false;
     @Column(name = "criado_em", updatable = false)
-    private LocalDateTime criadoEm;
+    private LocalDateTime criadoEm = LocalDateTime.now();
     @Column(name = "atualizado_em")
     private LocalDateTime atualizadoEm;
 

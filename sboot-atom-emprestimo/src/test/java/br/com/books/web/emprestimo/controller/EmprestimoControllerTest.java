@@ -1,7 +1,9 @@
 package br.com.books.web.emprestimo.controller;
 
 import br.com.books.web.emprestimo.dto.DevolucaoResponseDTO;
+import br.com.books.web.emprestimo.dto.EmprestimoRequestDTO;
 import br.com.books.web.emprestimo.model.Emprestimo;
+import br.com.books.web.emprestimo.model.Livro;
 import br.com.books.web.emprestimo.model.Usuario;
 import br.com.books.web.emprestimo.service.EmprestimoService;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,19 +42,22 @@ public class EmprestimoControllerTest {
         emprestimo.setId(1L);
         var usuario = new Usuario();
         usuario.setId(1L);
+        var livro = new Livro();
+        livro.setId(1L);
         emprestimo.setUsuario(usuario);
+        emprestimo.setLivro(livro);
     }
 
     @Test
     void testEmprestar() throws Exception {
-        when(emprestimoService.emprestar(any(Emprestimo.class))).thenReturn(emprestimo);
+        when(emprestimoService.emprestar(any(EmprestimoRequestDTO.class))).thenReturn(emprestimo);
         mockMvc.perform(post("/v1/emprestimos")
                         .contentType("application/json")
                         .content("{\"id\":1, \"usuarioId\":1, \"titulo\":\"Livro Teste\"}"))
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andReturn();
-        verify(emprestimoService, times(1)).emprestar(any(Emprestimo.class));
+        verify(emprestimoService, times(1)).emprestar(any(EmprestimoRequestDTO.class));
     }
 
     @Test

@@ -1,10 +1,14 @@
 package br.com.books.web.emprestimo.service.impl;
 
 import br.com.books.web.emprestimo.dto.DevolucaoResponseDTO;
+import br.com.books.web.emprestimo.dto.EmprestimoRequestDTO;
 import br.com.books.web.emprestimo.model.Emprestimo;
+import br.com.books.web.emprestimo.model.Livro;
 import br.com.books.web.emprestimo.model.Penalidade;
 import br.com.books.web.emprestimo.model.Usuario;
 import br.com.books.web.emprestimo.repository.EmprestimoRepository;
+import br.com.books.web.emprestimo.repository.LivroRepository;
+import br.com.books.web.emprestimo.repository.UsuarioRepository;
 import br.com.books.web.emprestimo.service.PenalidadeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -25,29 +30,48 @@ public class EmprestimoServiceImplTest {
     private EmprestimoRepository emprestimoRepository;
 
     @Mock
+    private UsuarioRepository usuarioRepository;
+
+    @Mock
+    private LivroRepository livroRepository;
+
+    @Mock
     private PenalidadeService penalidadeService;
 
     @InjectMocks
     private EmprestimoServiceImpl emprestimoService;
 
     private Emprestimo emprestimo;
+    private EmprestimoRequestDTO emprestimoRequest;
+    private Usuario usuario;
+    private Livro livro;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         emprestimo = new Emprestimo();
+        usuario = new Usuario();
+        livro = new Livro();
         emprestimo.setId(1L);
-        Usuario usuario = new Usuario();
         usuario.setId(1L);
+        livro.setId(1L);
         emprestimo.setUsuario(usuario);
+        emprestimo.setLivro(livro);
         emprestimo.setDevolvido(false);
+
+        emprestimoRequest = new EmprestimoRequestDTO();
+        emprestimoRequest.setDataDevolucao(LocalDateTime.now());
+        emprestimoRequest.setIdUsuario(1L);
+        emprestimoRequest.setIdLivro(1L);
     }
 
     @Test
     void testEmprestar() {
         when(emprestimoRepository.save(any())).thenReturn(emprestimo);
-        Emprestimo result = emprestimoService.emprestar(emprestimo);
-        verify(emprestimoRepository, times(1)).save(emprestimo);
+        when(usuarioRepository.findById(anyLong())).thenReturn(Optional.of(usuario));
+        when(livroRepository.findByIdAndStatus(anyLong(), any())).thenReturn(livro);
+        Emprestimo result = emprestimoService.emprestar(emprestimoRequest);
+        verify(emprestimoRepository, times(1)).save(any());
         assertNotNull(result);
         assertEquals(emprestimo.getId(), result.getId());
     }

@@ -1,5 +1,6 @@
 package br.com.books.web.emprestimo.model;
 
+import br.com.books.web.emprestimo.enums.StatusLivroEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,9 +21,8 @@ public class Livro {
     private String autor;
     @Column(nullable = false)
     private String genero;
-    @ManyToOne
-    @JoinColumn(name = "status_id", nullable = false)
-    private StatusLivro status;
+    @Column(name = "status_id", nullable = false)
+    private StatusLivroEnum status;
     @Column(name = "criado_em", nullable = false, updatable = false)
     private LocalDateTime dataCriacao;
     @Column(name = "atualizado_em")

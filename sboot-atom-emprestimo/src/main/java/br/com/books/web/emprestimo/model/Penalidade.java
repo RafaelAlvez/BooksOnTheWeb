@@ -6,7 +6,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity(name = "tb_penalidade")
+@Entity(name = "penalidade")
 @Data
 public class Penalidade {
 
