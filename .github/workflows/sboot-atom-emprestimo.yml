@@ -19,4 +19,4 @@ jobs:
       - name: Build with Maven
         run: mvn -f sboot-atom-emprestimo/pom.xml clean install --no-transfer-progress
       - name: Run tests
-        run: mvn test
+        run: mvn -f sboot-atom-emprestimo/pom.xml test
