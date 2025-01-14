@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -61,13 +62,26 @@ public class EmprestimoControllerTest {
     }
 
     @Test
+    void testEmprestar_whenExceptionThrown_shouldReturnBadRequest() {
+        when(emprestimoService.emprestar(any())).thenThrow(new RuntimeException("Erro inesperado"));
+        var response = emprestimoController.emprestar(new EmprestimoRequestDTO());
+        assertEquals(400, response.getStatusCode().value());
+    }
+
+    @Test
     void testObterEmprestimo() throws Exception {
         when(emprestimoService.obterEmprestimo(1L)).thenReturn(emprestimo);
         mockMvc.perform(get("/v1/emprestimos/{id}", 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1));
-
         verify(emprestimoService, times(1)).obterEmprestimo(1L);
+    }
+
+    @Test
+    void testObterEmprestimo_whenExceptionThrown_shouldReturnBadRequest() {
+        when(emprestimoService.obterEmprestimo(anyLong())).thenThrow(new RuntimeException("Erro inesperado"));
+        var response = emprestimoController.obterEmprestimo(1L);
+        assertEquals(400, response.getStatusCode().value());
     }
 
     @Test
@@ -81,6 +95,13 @@ public class EmprestimoControllerTest {
     }
 
     @Test
+    void testListarEmprestimos_whenExceptionThrown_shouldReturnBadRequest() {
+        when(emprestimoService.listarEmprestimos()).thenThrow(new RuntimeException("Erro inesperado"));
+        var response = emprestimoController.listarEmprestimos();
+        assertEquals(400, response.getStatusCode().value());
+    }
+
+    @Test
     void testDevolver() throws Exception {
         DevolucaoResponseDTO devolucaoResponseDTO = new DevolucaoResponseDTO(true, null, "", true);
         when(emprestimoService.devolver(1L)).thenReturn(devolucaoResponseDTO);
@@ -88,5 +109,12 @@ public class EmprestimoControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.devolvido").value(true));
         verify(emprestimoService, times(1)).devolver(1L);
+    }
+
+    @Test
+    void testDevolver_whenExceptionThrown_shouldReturnBadRequest() {
+        when(emprestimoService.devolver(anyLong())).thenThrow(new RuntimeException("Erro inesperado"));
+        var response = emprestimoController.devolver(1L);
+        assertEquals(400, response.getStatusCode().value());
     }
 }

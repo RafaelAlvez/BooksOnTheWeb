@@ -77,6 +77,19 @@ public class EmprestimoServiceImplTest {
     }
 
     @Test
+    void testEmprestarComUsuarioNaoEncontrado() {
+        when(usuarioRepository.findById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(RuntimeException.class, () -> emprestimoService.emprestar(emprestimoRequest));
+    }
+
+    @Test
+    void testEmprestarLivroNaoEncontrado() {
+        when(usuarioRepository.findById(anyLong())).thenReturn(Optional.of(usuario));
+        when(livroRepository.findByIdAndStatus(anyLong(), any())).thenReturn(null);
+        assertThrows(RuntimeException.class, () -> emprestimoService.emprestar(emprestimoRequest));
+    }
+
+    @Test
     void testObterEmprestimo() {
         when(emprestimoRepository.findById(1L)).thenReturn(Optional.of(emprestimo));
         Emprestimo result = emprestimoService.obterEmprestimo(1L);
@@ -112,6 +125,15 @@ public class EmprestimoServiceImplTest {
         DevolucaoResponseDTO response = emprestimoService.devolver(1L);
         assertNotNull(response);
         assertTrue(response.isPenalizado());
+    }
+
+    @Test
+    void testDevolverSemPenalidade() {
+        when(emprestimoRepository.findById(1L)).thenReturn(Optional.of(emprestimo));
+        when(penalidadeService.verificarPenalidade(emprestimo)).thenReturn(null);
+        DevolucaoResponseDTO response = emprestimoService.devolver(1L);
+        assertNotNull(response);
+        assertFalse(response.isPenalizado());
     }
 
     @Test
