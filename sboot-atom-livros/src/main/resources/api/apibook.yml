@@ -1,0 +1,67 @@
+openapi: 3.0.0
+info:
+  title: Livros API
+  description: API para gerenciar livros
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Servidor local
+
+paths:
+  /v1/livros:
+    get:
+      summary: Listar todos os livros
+      responses:
+        '200':
+          description: Lista de livros
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Livro'
+    post:
+      summary: Adiciona um novo livro
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Livro'
+      responses:
+        '201':
+          description: Livro criado
+  /v1/livros/{id}:
+    get:
+      summary: Busca um livro por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Livro encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Livro'
+        '404':
+          description: Livro não encontrado
+components:
+  schemas:
+    Livro:
+      type: object
+      properties:
+        id:
+          type: integer
+        titulo:
+          type: string
+        autor:
+          type: string
+        genero:
+          type: string
+        status:
+          type: string
