@@ -1,4 +1,11 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /dev-book-web
+
 spring:
+  profile:
+    active: local
   application:
     name: sboot.atom.livros
   datasource:
@@ -7,8 +14,6 @@ spring:
     password: admin123
     driver-class-name: org.postgresql.Driver
   jpa:
-    hibernate:
-      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect

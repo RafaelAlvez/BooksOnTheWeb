@@ -5,13 +5,15 @@ info:
   version: 1.0.0
 
 servers:
-  - url: http://localhost:8080
+  - url: http://localhost:8080/dev-book-web
     description: Servidor local
 
 paths:
   /v1/livros:
     get:
       summary: Listar todos os livros
+      description: Consultar todos os livros disponíveis.
+      operationId: listarLivros
       responses:
         '200':
           description: Lista de livros
@@ -21,26 +23,48 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Livro'
+
     post:
       summary: Adiciona um novo livro
+      description: Adiciona um livro novo na coleção.
+      operationId: adicionarLivro
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Livro'
+              $ref: '#/components/schemas/LivroInput'
       responses:
         '201':
           description: Livro criado
+          headers:
+            Location:
+              description: Url do recurso criado
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LivroOutput'
+        '422':
+          description: Uprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
   /v1/livros/{id}:
     get:
       summary: Busca um livro por ID
+      description: Consultar um livro pelo ID
+      operationId: consultarLivro
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: Livro encontrado
@@ -50,6 +74,42 @@ paths:
                 $ref: '#/components/schemas/Livro'
         '404':
           description: Livro não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LivroNotFound'
+
+    put:
+      summary: Editar informações de um livro
+      description: Atualiza os detalhes de um livro com base no ID.
+      operationId: atualizarLivro
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID único do livro
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - DISPONIVEL
+              - INDISPONIVEL
+              - EM_EMPRESTIMO
+      responses:
+        '204':
+          description: Livro atualizado
+        '404':
+          description: Livro não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LivroNotFound'
+
 components:
   schemas:
     Livro:
@@ -57,11 +117,47 @@ components:
       properties:
         id:
           type: integer
+          format: int64
         titulo:
           type: string
+          minLength: 2
+          maxLength: 255
         autor:
           type: string
+          minLength: 2
+          maxLength: 70
         genero:
           type: string
+          minLength: 2
+          maxLength: 50
         status:
+          type: string
+          enum:
+            - DISPONIVEL
+            - INDISPONIVEL
+            - EM_EMPRESTIMO
+
+    LivroOutput:
+      allOf:
+        - $ref: '#/components/schemas/Livro'
+        - type: object
+
+    LivroInput:
+      allOf:
+        - $ref: '#/components/schemas/Livro'
+        - type: object
+
+    LivroNotFound:
+      allOf:
+        - $ref: '#/components/schemas/Error'
+        - type: object
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        error:
+          type: string
+        path:
           type: string
