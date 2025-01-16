@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /dev-book-web
+
+spring:
+  profile:
+    active: local
+  application:
+    name: sboot.atom.livros
+  datasource:
+    url: jdbc:postgresql://localhost:5432/booksontheweb
+    username: admin
+    password: admin123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect

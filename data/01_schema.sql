@@ -3,7 +3,7 @@
 BEGIN;
 
 -- Conexão ao banco de dados
--- \c booksontheweb;
+\c booksontheweb;
 
 -- Tabela de Usuários
 DO $$ BEGIN
