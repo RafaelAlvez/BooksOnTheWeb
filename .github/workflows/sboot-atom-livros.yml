@@ -2,7 +2,7 @@ name: CI Workflow - Livros
 
 on:
   push:
-    paths:
+    branches:
       - 'sboot-atom-livros/main'
   pull_request:
     branches:
