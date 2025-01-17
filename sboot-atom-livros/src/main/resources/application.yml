@@ -3,13 +3,14 @@ server:
   servlet:
     context-path: /dev-book-web
 
+---
 spring:
-  profile:
+  profiles:
     active: local
   application:
     name: sboot.atom.livros
   datasource:
-    url: jdbc:postgresql://localhost:5432/booksontheweb
+    url: jdbc:postgresql://db:5432/booksontheweb
     username: admin
     password: admin123
     driver-class-name: org.postgresql.Driver

@@ -16,7 +16,7 @@ public interface LivroRepository extends JpaRepository<LivroEntity, Long> {
 
     @Modifying
     @Transactional
-    @Query("update livros set status = :statusId, atualizadoEm = :atualizadoEm where id = :id")
+    @Query("update livro set status = :statusId, atualizadoEm = :atualizadoEm where id = :id")
     int atualizarLivro(@Param("statusId") StatusLivro statusId, @Param("atualizadoEm") OffsetDateTime atualizadoEm, @Param("id") Long id);
 
 }

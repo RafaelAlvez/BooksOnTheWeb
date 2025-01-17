@@ -3,7 +3,10 @@ name: CI Workflow - Usuarios
 on:
   push:
     branches:
-      - '**/*'
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -11,10 +14,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
       - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
           java-version: '21'
           distribution: 'adopt'
+          
       - name: Build with Maven
         run: mvn -f sboot-atom-usuarios/pom.xml clean install --no-transfer-progress
