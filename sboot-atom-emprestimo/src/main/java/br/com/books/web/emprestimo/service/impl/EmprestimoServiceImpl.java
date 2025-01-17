@@ -76,7 +76,7 @@ public class EmprestimoServiceImpl implements EmprestimoService {
         livro.setStatus(StatusLivroEnum.DISPONIVEL);
         livroRepository.save(livro);
 
-        var penalidade = penalidadeService.verificarPenalidade(emprestimo);
+        var penalidade = penalidadeService.verificarPenalidade(emprestimo, false);
         emprestimo.setDevolvido(true);
         emprestimo.setDataDevolucaoReal(LocalDateTime.now());
         emprestimoRepository.save(emprestimo);
@@ -87,6 +87,11 @@ public class EmprestimoServiceImpl implements EmprestimoService {
                 getMensagemRetorno(penalizado),
                 true
         );
+    }
+
+    @Override
+    public List<Emprestimo> listarEmprestimosEmAtraso() {
+        return emprestimoRepository.findByDataDevolucaoPrevistaGreaterThanAndDevolvido(LocalDateTime.now(), false);
     }
 
     private String getMensagemRetorno(boolean penalizado) {

@@ -126,7 +126,7 @@ public class EmprestimoServiceImplTest {
     @Test
     void testDevolverComPenalidade() {
         when(emprestimoRepository.findById(1L)).thenReturn(Optional.of(emprestimo));
-        when(penalidadeService.verificarPenalidade(emprestimo)).thenReturn(new Penalidade());
+        when(penalidadeService.verificarPenalidade(emprestimo, false)).thenReturn(new Penalidade());
         DevolucaoResponseDTO response = null;
         try {
             response = emprestimoService.devolver(1L);
@@ -140,7 +140,7 @@ public class EmprestimoServiceImplTest {
     @Test
     void testDevolverSemPenalidade() {
         when(emprestimoRepository.findById(1L)).thenReturn(Optional.of(emprestimo));
-        when(penalidadeService.verificarPenalidade(emprestimo)).thenReturn(null);
+        when(penalidadeService.verificarPenalidade(emprestimo, false)).thenReturn(null);
         try {
             DevolucaoResponseDTO response = emprestimoService.devolver(1L);
             assertNotNull(response);

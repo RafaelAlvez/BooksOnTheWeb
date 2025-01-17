@@ -3,7 +3,6 @@ package br.com.books.web.emprestimo.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Arrays;
 
 @Getter
 @RequiredArgsConstructor

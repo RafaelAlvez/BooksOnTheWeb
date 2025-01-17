@@ -14,4 +14,5 @@ public interface EmprestimoService {
     List<Emprestimo> listarEmprestimos();
     List<Emprestimo> listarEmprestimosPorUsuario(Long idUsuario);
     DevolucaoResponseDTO devolver(Long id) throws EmprestimoException;
+    List<Emprestimo> listarEmprestimosEmAtraso();
 }
