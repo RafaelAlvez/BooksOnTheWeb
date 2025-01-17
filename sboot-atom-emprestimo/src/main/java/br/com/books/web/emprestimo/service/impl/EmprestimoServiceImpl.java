@@ -3,6 +3,7 @@ package br.com.books.web.emprestimo.service.impl;
 import br.com.books.web.emprestimo.dto.DevolucaoResponseDTO;
 import br.com.books.web.emprestimo.dto.EmprestimoRequestDTO;
 import br.com.books.web.emprestimo.enums.StatusLivroEnum;
+import br.com.books.web.emprestimo.exceptions.EmprestimoException;
 import br.com.books.web.emprestimo.model.Emprestimo;
 import br.com.books.web.emprestimo.model.Livro;
 import br.com.books.web.emprestimo.model.Usuario;
@@ -30,14 +31,14 @@ public class EmprestimoServiceImpl implements EmprestimoService {
 
     @Override
     @Transactional
-    public Emprestimo emprestar(EmprestimoRequestDTO request) {
+    public Emprestimo emprestar(EmprestimoRequestDTO request) throws EmprestimoException {
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(request.getIdUsuario());
         if(usuarioOpt.isEmpty()) {
-            throw new IllegalArgumentException("Usuario não encontrado");
+            throw new EmprestimoException("Usuario não encontrado");
         }
         var livro = livroRepository.findByIdAndStatus(request.getIdLivro(), StatusLivroEnum.DISPONIVEL);
         if(livro == null) {
-            throw new IllegalArgumentException("Livro não disponivel para emprestimo");
+            throw new EmprestimoException("Livro não disponivel para emprestimo");
         }
         Emprestimo emprestimo = new Emprestimo();
         emprestimo.setUsuario(usuarioOpt.get());
@@ -66,10 +67,10 @@ public class EmprestimoServiceImpl implements EmprestimoService {
 
     @Override
     @Transactional
-    public DevolucaoResponseDTO devolver(Long id) {
+    public DevolucaoResponseDTO devolver(Long id) throws EmprestimoException {
         var emprestimo = obterEmprestimo(id);
         if(emprestimo == null) {
-            throw new RuntimeException("Emprestimo não encontrado");
+            throw new EmprestimoException("Emprestimo não encontrado");
         }
         Livro livro = emprestimo.getLivro();
         livro.setStatus(StatusLivroEnum.DISPONIVEL);
