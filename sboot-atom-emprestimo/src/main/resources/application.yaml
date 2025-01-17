@@ -28,6 +28,12 @@ spring:
       minimum-idle: 2
       idle-timeout: 30000
       max-lifetime: 1800000
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
 management:
   endpoints:
     web:

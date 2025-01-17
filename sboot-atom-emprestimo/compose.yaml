@@ -8,9 +8,11 @@ services:
     ports:
       - '5432'
   rabbitmq:
-    image: 'rabbitmq:latest'
-    environment:
-      - 'RABBITMQ_DEFAULT_PASS=secret'
-      - 'RABBITMQ_DEFAULT_USER=myuser'
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
     ports:
-      - '5672'
+      - "5672:5672"  # Porta do RabbitMQ (protocol AMQP)
+      - "15672:15672"  # Porta para a interface de gerenciamento do RabbitMQ (HTTP)
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
