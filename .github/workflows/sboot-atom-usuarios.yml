@@ -2,11 +2,11 @@ name: CI Workflow - Usuarios
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - 'sboot-atom-usuarios/main'
   pull_request:
     branches:
-      - main
+      - 'sboot-atom-usuarios/main'
 
 jobs:
   build:
