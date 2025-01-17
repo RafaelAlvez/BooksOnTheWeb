@@ -2,6 +2,7 @@ package br.com.books.web.emprestimo.controller;
 
 import br.com.books.web.emprestimo.dto.DevolucaoResponseDTO;
 import br.com.books.web.emprestimo.dto.EmprestimoRequestDTO;
+import br.com.books.web.emprestimo.exceptions.EmprestimoException;
 import br.com.books.web.emprestimo.model.Emprestimo;
 import br.com.books.web.emprestimo.model.Livro;
 import br.com.books.web.emprestimo.model.Usuario;
@@ -62,7 +63,7 @@ public class EmprestimoControllerTest {
     }
 
     @Test
-    void testEmprestar_whenExceptionThrown_shouldReturnBadRequest() {
+    void testEmprestar_whenExceptionThrown_shouldReturnBadRequest() throws EmprestimoException {
         when(emprestimoService.emprestar(any())).thenThrow(new RuntimeException("Erro inesperado"));
         var response = emprestimoController.emprestar(new EmprestimoRequestDTO());
         assertEquals(400, response.getStatusCode().value());
@@ -112,7 +113,7 @@ public class EmprestimoControllerTest {
     }
 
     @Test
-    void testDevolver_whenExceptionThrown_shouldReturnBadRequest() {
+    void testDevolver_whenExceptionThrown_shouldReturnBadRequest() throws EmprestimoException {
         when(emprestimoService.devolver(anyLong())).thenThrow(new RuntimeException("Erro inesperado"));
         var response = emprestimoController.devolver(1L);
         assertEquals(400, response.getStatusCode().value());

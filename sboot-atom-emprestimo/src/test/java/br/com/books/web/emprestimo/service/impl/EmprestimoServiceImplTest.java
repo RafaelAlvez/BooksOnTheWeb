@@ -2,6 +2,7 @@ package br.com.books.web.emprestimo.service.impl;
 
 import br.com.books.web.emprestimo.dto.DevolucaoResponseDTO;
 import br.com.books.web.emprestimo.dto.EmprestimoRequestDTO;
+import br.com.books.web.emprestimo.exceptions.EmprestimoException;
 import br.com.books.web.emprestimo.model.Emprestimo;
 import br.com.books.web.emprestimo.model.Livro;
 import br.com.books.web.emprestimo.model.Penalidade;
@@ -70,23 +71,27 @@ public class EmprestimoServiceImplTest {
         when(emprestimoRepository.save(any())).thenReturn(emprestimo);
         when(usuarioRepository.findById(anyLong())).thenReturn(Optional.of(usuario));
         when(livroRepository.findByIdAndStatus(anyLong(), any())).thenReturn(livro);
-        Emprestimo result = emprestimoService.emprestar(emprestimoRequest);
-        verify(emprestimoRepository, times(1)).save(any());
-        assertNotNull(result);
-        assertEquals(emprestimo.getId(), result.getId());
+        try {
+            Emprestimo result = emprestimoService.emprestar(emprestimoRequest);
+            verify(emprestimoRepository, times(1)).save(any());
+            assertNotNull(result);
+            assertEquals(emprestimo.getId(), result.getId());
+        } catch (EmprestimoException e) {
+            fail(e.getMessage());
+        }
     }
 
     @Test
     void testEmprestarComUsuarioNaoEncontrado() {
         when(usuarioRepository.findById(anyLong())).thenReturn(Optional.empty());
-        assertThrows(RuntimeException.class, () -> emprestimoService.emprestar(emprestimoRequest));
+        assertThrows(EmprestimoException.class, () -> emprestimoService.emprestar(emprestimoRequest));
     }
 
     @Test
     void testEmprestarLivroNaoEncontrado() {
         when(usuarioRepository.findById(anyLong())).thenReturn(Optional.of(usuario));
         when(livroRepository.findByIdAndStatus(anyLong(), any())).thenReturn(null);
-        assertThrows(RuntimeException.class, () -> emprestimoService.emprestar(emprestimoRequest));
+        assertThrows(EmprestimoException.class, () -> emprestimoService.emprestar(emprestimoRequest));
     }
 
     @Test
@@ -122,23 +127,32 @@ public class EmprestimoServiceImplTest {
     void testDevolverComPenalidade() {
         when(emprestimoRepository.findById(1L)).thenReturn(Optional.of(emprestimo));
         when(penalidadeService.verificarPenalidade(emprestimo)).thenReturn(new Penalidade());
-        DevolucaoResponseDTO response = emprestimoService.devolver(1L);
-        assertNotNull(response);
-        assertTrue(response.isPenalizado());
+        DevolucaoResponseDTO response = null;
+        try {
+            response = emprestimoService.devolver(1L);
+            assertNotNull(response);
+            assertTrue(response.isPenalizado());
+        } catch (EmprestimoException e) {
+            fail(e.getMessage());
+        }
     }
 
     @Test
     void testDevolverSemPenalidade() {
         when(emprestimoRepository.findById(1L)).thenReturn(Optional.of(emprestimo));
         when(penalidadeService.verificarPenalidade(emprestimo)).thenReturn(null);
-        DevolucaoResponseDTO response = emprestimoService.devolver(1L);
-        assertNotNull(response);
-        assertFalse(response.isPenalizado());
+        try {
+            DevolucaoResponseDTO response = emprestimoService.devolver(1L);
+            assertNotNull(response);
+            assertFalse(response.isPenalizado());
+        } catch (EmprestimoException e) {
+            fail(e.getMessage());
+        }
     }
 
     @Test
     void testDevolverEmprestimoNaoEncontrado() {
         when(emprestimoRepository.findById(99L)).thenReturn(Optional.empty());
-        assertThrows(RuntimeException.class, () -> emprestimoService.devolver(99L));
+        assertThrows(EmprestimoException.class, () -> emprestimoService.devolver(99L));
     }
 }
