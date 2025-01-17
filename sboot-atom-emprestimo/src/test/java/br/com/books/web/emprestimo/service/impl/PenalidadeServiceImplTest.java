@@ -54,6 +54,13 @@ public class PenalidadeServiceImplTest {
     }
 
     @Test
+    void testVerificarPenalidade() {
+        when(penalidadeRepository.save(any())).thenReturn(new Penalidade());
+        var response = penalidadeService.verificarPenalidade(emprestimo, true);
+        assertNotNull(response);
+    }
+
+    @Test
     void testVerificarPenalidadeSemAtraso() {
         Emprestimo emprestimoSemAtraso = new Emprestimo();
         emprestimoSemAtraso.setId(2L);

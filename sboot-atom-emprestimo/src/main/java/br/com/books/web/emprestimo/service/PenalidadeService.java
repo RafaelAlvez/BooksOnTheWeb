@@ -6,5 +6,5 @@ import br.com.books.web.emprestimo.model.Penalidade;
 public interface PenalidadeService {
 
     Penalidade verificarPenalidade(Long emprestimoId);
-    Penalidade verificarPenalidade(Emprestimo emprestimo);
+    Penalidade verificarPenalidade(Emprestimo emprestimo, boolean scheduler);
 }
