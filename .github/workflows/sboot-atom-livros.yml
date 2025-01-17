@@ -33,7 +33,7 @@ jobs:
       
       - name: Build Docker Image
         run: |
-          docker build -t rafaelalvezh/booksontheweb:latest -f docker/Dockerfile .
+          docker build -t rafaelalvezh/booksontheweb:latest -f sboot-atom-livros/docker/Dockerfile sboot-atom-livros/
       
       - name: Push Docker Image
         run: |
