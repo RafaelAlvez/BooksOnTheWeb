@@ -1,4 +1,4 @@
-name: CI Workflow - Livros
+gitname: CI Workflow - Livros
 
 on:
   push:
