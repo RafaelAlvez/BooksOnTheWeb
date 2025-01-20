@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <groupId>br.com.books.web</groupId>
-    <artifactId>usuarios</artifactId>
+    <artifactId>sboot-usuarios</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>sboot-atom-usuarios</name>
     <description>BooksOnTheWeb - usuarios</description>

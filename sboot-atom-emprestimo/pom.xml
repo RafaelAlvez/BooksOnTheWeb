@@ -9,9 +9,9 @@
 		<relativePath/>
 	</parent>
 	<groupId>br.com.books.web</groupId>
-	<artifactId>emprestimo</artifactId>
+	<artifactId>sboot-emprestimo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>sboot-atom-emprestimo</name>
+	<name>sboot-emprestimo</name>
 	<description>BooksOnTheWeb - Emprestimo</description>
 	<url/>
 	<licenses>
