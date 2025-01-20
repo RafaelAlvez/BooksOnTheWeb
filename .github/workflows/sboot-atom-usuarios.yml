@@ -1,4 +1,4 @@
-gitname: CI Workflow - usuarios
+name: CI Workflow - Usuários
 
 on:
   push:
