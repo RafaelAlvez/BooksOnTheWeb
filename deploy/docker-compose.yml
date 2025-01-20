@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  microservice-sboot.livro:
+    image: rafaelalvezh/sboot-atom-livros:latest
+    container_name: microservico_sboot.livro
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - books-network
+
+  microservice-sboot.usuario:
+    image: rafaelalvezh/sboot-atom-usuarios:latest
+    container_name: microservico_sboot.usuario
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - books-network
+
+  microservice-sboot.emprestimo:
+    image: rafaelalvezh/sboot-atom-emprestimo:latest
+    container_name: microservico_sboot.emprestimo
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - books-network
+    depends_on:
+      - microservice-sboot.livro
+      - microservice-sboot.usuario
