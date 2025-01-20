@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { UsuarioService, UsuarioRequestDTO } from '../services/usuario.service';
+import { UsuarioService, UsuarioRequestDTO, UsuarioResponseDTO } from '../services/usuario.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -12,8 +12,9 @@ import { UsuarioService, UsuarioRequestDTO } from '../services/usuario.service';
   styleUrls: ['./usuarios.component.css'],
 })
 export class UsuariosComponent implements OnInit {
-  usuarios: any[] = [];
+  usuarios: UsuarioResponseDTO[] = [];
   novoUsuario: UsuarioRequestDTO = { nome: '', email: '', telefone: '' };
+  usuarioSelecionado: UsuarioResponseDTO | null = null;
   mensagemErro: string | null = null;
   mensagemSucesso: string | null = null;
 
@@ -40,12 +41,50 @@ export class UsuariosComponent implements OnInit {
         this.novoUsuario = { nome: '', email: '', telefone: '' };
         this.mensagemSucesso = 'Usuário adicionado com sucesso!';
       },
-      error: (err) => {
-        this.mensagemErro =
-          err.status === 400
-            ? 'Erro ao adicionar usuário: Dados inválidos.'
-            : 'Erro ao adicionar usuário. Tente novamente.';
+      error: () => {
+        this.mensagemErro = 'Erro ao adicionar usuário. Tente novamente.';
       },
     });
   }
+
+  selecionarUsuario(usuario: UsuarioResponseDTO): void {
+    this.usuarioSelecionado = { ...usuario };
+  }
+
+  atualizarUsuario(): void {
+    if (this.usuarioSelecionado) {
+      const confirmacao = confirm('Você tem certeza de que deseja atualizar este usuário?');
+      if (confirmacao) {
+        this.usuarioService
+          .atualizarUsuario(this.usuarioSelecionado.idUsuario, this.usuarioSelecionado)
+          .subscribe({
+            next: () => {
+              this.carregarUsuarios();
+              this.usuarioSelecionado = null;
+              this.mensagemSucesso = 'Usuário atualizado com sucesso!';
+            },
+            error: () => {
+              this.mensagemErro = 'Erro ao atualizar usuário. Tente novamente.';
+            },
+          });
+      }
+    }
+  }
+
+
+  deletarUsuario(id: number): void {
+    const confirmacao = confirm('Você tem certeza de que deseja excluir este usuário?');
+    if (confirmacao) {
+      this.usuarioService.deletarUsuario(id).subscribe({
+        next: () => {
+          this.carregarUsuarios();
+          this.mensagemSucesso = 'Usuário deletado com sucesso!';
+        },
+        error: () => {
+          this.mensagemErro = 'Erro ao deletar usuário. Tente novamente.';
+        },
+      });
+    }
+  }
+
 }
