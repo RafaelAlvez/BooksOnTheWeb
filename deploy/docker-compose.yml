@@ -11,28 +11,28 @@ services:
     networks:
       - books-network
 
-   microservice-sboot.usuario:
-     image: rafaelalvezh/sboot-atom-usuarios:latest
-     container_name: microservice_sboot_usuario
-     ports:
-       - "8086:8086"
-     environment:
-       - SPRING_PROFILES_ACTIVE=docker
-     networks:
-       - books-network
+  microservice-sboot.usuario:
+    image: rafaelalvezh/sboot-atom-usuarios:latest
+    container_name: microservice_sboot_usuario
+    ports:
+      - "8086:8086"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - books-network
 
-   microservice-sboot.emprestimo:
-     image: rafaelalvezh/sboot-atom-emprestimo:latest
-     container_name: microservice_sboot_emprestimo
-     ports:
-       - "8087:8087"
-     environment:
-       - SPRING_PROFILES_ACTIVE=docker
-     networks:
-       - books-network
-     depends_on:
-       - microservice-sboot.livro
-       - microservice-sboot.usuario
+  microservice-sboot.emprestimo:
+    image: rafaelalvezh/sboot-atom-emprestimo:latest
+    container_name: microservice_sboot_emprestimo
+    ports:
+      - "8087:8087"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - books-network
+    depends_on:
+      - microservice-sboot.livro
+      - microservice-sboot.usuario
 
 networks:
   books-network:
