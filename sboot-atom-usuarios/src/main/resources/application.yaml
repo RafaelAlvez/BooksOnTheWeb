@@ -18,10 +18,10 @@ spring:
         dialect: "org.hibernate.dialect.H2Dialect"
         format_sql: false
   datasource:
-    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;INIT=create domain if not exists jsonb as text;MODE=PostgreSQL
-    username: sa
-    password: sa
-    driver-class-name: "org.h2.Driver"
+    url: jdbc:postgresql://localhost:5432/booksontheweb
+    username: admin
+    password: admin123
+    driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 10
       connection-timeout: 20000
