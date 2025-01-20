@@ -4,17 +4,19 @@
   <div>
     <h2>Adicionar Novo Usuário</h2>
     <form (submit)="adicionarUsuario()">
+      <h2>Adicionar Usuário</h2>
       <label for="nome">Nome:</label>
-      <input id="nome" [(ngModel)]="novoUsuario.nome" name="nome" required />
+      <input id="nome" type="text" [(ngModel)]="novoUsuario.nome" name="nome" required />
 
       <label for="email">Email:</label>
-      <input id="email" [(ngModel)]="novoUsuario.email" name="email" required />
+      <input id="email" type="email" [(ngModel)]="novoUsuario.email" name="email" required />
 
       <label for="telefone">Telefone:</label>
-      <input id="telefone" [(ngModel)]="novoUsuario.telefone" name="telefone" required />
+      <input id="telefone" type="text" [(ngModel)]="novoUsuario.telefone" name="telefone" required />
 
       <button type="submit">Adicionar</button>
     </form>
+
   </div>
 
   <div>
