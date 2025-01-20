@@ -1,1 +1,45 @@
+/* Centralizar todos os textos e títulos */
+h1, h2, h3, p, label {
+  text-align: center;
+}
+
+/* Estilizar os títulos principais */
+h1, h2 {
+  margin-bottom: 20px;
+}
+
+/* Centralizar o container principal */
+.container, .livros-container, .penalidades-container, .emprestimos-container {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+/* Estilizar listas de itens */
+ul {
+  padding: 0;
+  list-style-type: none;
+  text-align: center;
+}
+
+li {
+  margin: 10px 0;
+}
+
+.link-home {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.link-home a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #007bff;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.link-home a:hover {
+  color: #0056b3;
+}
 /* You can add global styles to this file, and also import other style files */

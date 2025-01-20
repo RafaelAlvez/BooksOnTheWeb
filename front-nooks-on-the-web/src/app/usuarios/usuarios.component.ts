@@ -1,19 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UsuarioService, UsuarioRequestDTO, UsuarioResponseDTO } from '../services/usuario.service';
+import { RouterModule } from '@angular/router';
+import { UsuarioService, UsuarioRequestDTO } from '../services/usuario.service';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.css'],
 })
 export class UsuariosComponent implements OnInit {
-  usuarios: UsuarioResponseDTO[] = [];
+  usuarios: any[] = [];
   novoUsuario: UsuarioRequestDTO = { nome: '', email: '', telefone: '' };
-  usuarioSelecionado: UsuarioResponseDTO | null = null;
+  mensagemErro: string | null = null;
+  mensagemSucesso: string | null = null;
 
   constructor(private usuarioService: UsuarioService) {}
 
@@ -22,32 +24,28 @@ export class UsuariosComponent implements OnInit {
   }
 
   carregarUsuarios(): void {
-    this.usuarioService.obterTodosUsuarios().subscribe((data) => (this.usuarios = data));
-  }
-
-  adicionarUsuario(): void {
-    this.usuarioService.adicionarUsuario(this.novoUsuario).subscribe(() => {
-      this.carregarUsuarios();
-      this.novoUsuario = { nome: '', email: '', telefone: '' };
+    this.usuarioService.obterTodosUsuarios().subscribe({
+      next: (data) => (this.usuarios = data),
+      error: () => (this.mensagemErro = 'Erro ao carregar a lista de usuários.'),
     });
   }
 
-  editarUsuario(usuario: UsuarioResponseDTO): void {
-    this.usuarioSelecionado = { ...usuario };
-  }
+  adicionarUsuario(): void {
+    this.mensagemErro = null;
+    this.mensagemSucesso = null;
 
-  atualizarUsuario(): void {
-    if (this.usuarioSelecionado) {
-      this.usuarioService
-        .atualizarUsuario(this.usuarioSelecionado.idUsuario, this.usuarioSelecionado)
-        .subscribe(() => {
-          this.carregarUsuarios();
-          this.usuarioSelecionado = null;
-        });
-    }
-  }
-
-  deletarUsuario(id: number): void {
-    this.usuarioService.deletarUsuario(id).subscribe(() => this.carregarUsuarios());
+    this.usuarioService.adicionarUsuario(this.novoUsuario).subscribe({
+      next: () => {
+        this.carregarUsuarios();
+        this.novoUsuario = { nome: '', email: '', telefone: '' };
+        this.mensagemSucesso = 'Usuário adicionado com sucesso!';
+      },
+      error: (err) => {
+        this.mensagemErro =
+          err.status === 400
+            ? 'Erro ao adicionar usuário: Dados inválidos.'
+            : 'Erro ao adicionar usuário. Tente novamente.';
+      },
+    });
   }
 }

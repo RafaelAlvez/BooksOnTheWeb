@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { PenalidadeService, PenalidadeDTO } from '../services/penalidade.service';
 
 @Component({
   selector: 'app-penalidades',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './penalidades.component.html',
   styleUrls: ['./penalidades.component.css'],
 })
@@ -19,21 +20,22 @@ export class PenalidadesComponent {
 
   verificarPenalidade(): void {
     if (this.idUsuario !== null) {
-      this.penalidadeService.verificarPenalidade(this.idUsuario).subscribe(
-        (data) => {
+      this.mensagemErro = null;
+
+      this.penalidadeService.verificarPenalidade(this.idUsuario).subscribe({
+        next: (data) => {
           this.penalidade = data;
           this.mensagemErro = null;
         },
-        (error) => {
-          if (error.status === 404) {
+        error: (err) => {
+          if (err.status === 404) {
             this.mensagemErro = 'Penalidade não encontrada para este usuário.';
           } else {
             this.mensagemErro = 'Erro ao buscar penalidade. Tente novamente.';
           }
           this.penalidade = null;
-        }
-      );
+        },
+      });
     }
   }
 }
-

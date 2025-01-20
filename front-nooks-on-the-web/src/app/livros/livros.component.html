@@ -1,37 +1,37 @@
+<div class="link-home">
+  <a routerLink="/">← Voltar para a Tela Inicial</a>
+</div>
+
 <div class="livros-container">
   <h1>Gestão de Livros</h1>
 
-  <div>
+  <div *ngIf="mensagemErro" class="alert alert-danger">{{ mensagemErro }}</div>
+  <div *ngIf="mensagemSucesso" class="alert alert-success">{{ mensagemSucesso }}</div>
+
+  <form (submit)="adicionarLivro()">
     <h2>Adicionar Novo Livro</h2>
-    <form (submit)="adicionarLivro()">
-      <label for="titulo">Título:</label>
-      <input id="titulo" [(ngModel)]="novoLivro.titulo" name="titulo" required />
+    <label for="titulo">Título:</label>
+    <input id="titulo" [(ngModel)]="novoLivro.titulo" name="titulo" required />
 
-      <label for="autor">Autor:</label>
-      <input id="autor" [(ngModel)]="novoLivro.autor" name="autor" required />
+    <label for="autor">Autor:</label>
+    <input id="autor" [(ngModel)]="novoLivro.autor" name="autor" required />
 
-      <label for="genero">Gênero:</label>
-      <input id="genero" [(ngModel)]="novoLivro.genero" name="genero" required />
+    <label for="genero">Gênero:</label>
+    <input id="genero" [(ngModel)]="novoLivro.genero" name="genero" required />
 
-      <label for="status">Status:</label>
-      <select id="status" [(ngModel)]="novoLivro.status" name="status">
-        <option value="DISPONIVEL">Disponível</option>
-        <option value="INDISPONIVEL">Indisponível</option>
-      </select>
+    <label for="status">Status:</label>
+    <select id="status" [(ngModel)]="novoLivro.status" name="status">
+      <option value="DISPONIVEL">Disponível</option>
+      <option value="INDISPONIVEL">Indisponível</option>
+    </select>
 
-      <button type="submit">Adicionar Livro</button>
-    </form>
-  </div>
+    <button type="submit">Adicionar Livro</button>
+  </form>
 
-  <div>
-    <h2>Lista de Livros</h2>
-    <ul>
-      <li *ngFor="let livro of livros">
-        <strong>{{ livro.titulo }}</strong> por {{ livro.autor }} - {{ livro.genero }}
-        ({{ livro.status }})
-        <button (click)="editarLivro(livro)">Editar</button>
-        <button (click)="atualizarStatus(livro.id, 'INDISPONIVEL')">Marcar como Indisponível</button>
-      </li>
-    </ul>
-  </div>
+  <h2>Lista de Livros</h2>
+  <ul>
+    <li *ngFor="let livro of livros">
+      {{ livro.titulo }} por {{ livro.autor }} ({{ livro.genero }}) - {{ livro.status }}
+    </li>
+  </ul>
 </div>

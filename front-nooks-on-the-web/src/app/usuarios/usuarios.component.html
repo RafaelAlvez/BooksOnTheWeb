@@ -1,48 +1,31 @@
-<div>
+<div class="link-home">
+  <a routerLink="/">← Voltar para a Tela Inicial</a>
+</div>
+
+<div class="container">
   <h1>Gerenciamento de Usuários</h1>
 
-  <div>
+  <div *ngIf="mensagemErro" class="alert alert-danger">{{ mensagemErro }}</div>
+  <div *ngIf="mensagemSucesso" class="alert alert-success">{{ mensagemSucesso }}</div>
+
+  <form (submit)="adicionarUsuario()">
     <h2>Adicionar Novo Usuário</h2>
-    <form (submit)="adicionarUsuario()">
-      <h2>Adicionar Usuário</h2>
-      <label for="nome">Nome:</label>
-      <input id="nome" type="text" [(ngModel)]="novoUsuario.nome" name="nome" required />
+    <label for="nome">Nome:</label>
+    <input id="nome" type="text" [(ngModel)]="novoUsuario.nome" name="nome" required />
 
-      <label for="email">Email:</label>
-      <input id="email" type="email" [(ngModel)]="novoUsuario.email" name="email" required />
+    <label for="email">Email:</label>
+    <input id="email" type="email" [(ngModel)]="novoUsuario.email" name="email" required />
 
-      <label for="telefone">Telefone:</label>
-      <input id="telefone" type="text" [(ngModel)]="novoUsuario.telefone" name="telefone" required />
+    <label for="telefone">Telefone:</label>
+    <input id="telefone" type="text" [(ngModel)]="novoUsuario.telefone" name="telefone" required />
 
-      <button type="submit">Adicionar</button>
-    </form>
+    <button type="submit">Adicionar</button>
+  </form>
 
-  </div>
-
-  <div>
-    <h2>Lista de Usuários</h2>
-    <ul>
-      <li *ngFor="let usuario of usuarios">
-        {{ usuario.nome }} - {{ usuario.email }} - {{ usuario.telefone }}
-        <button (click)="editarUsuario(usuario)">Editar</button>
-        <button (click)="deletarUsuario(usuario.idUsuario)">Deletar</button>
-      </li>
-    </ul>
-  </div>
-
-  <div *ngIf="usuarioSelecionado">
-    <h2>Editar Usuário</h2>
-    <form (submit)="atualizarUsuario()">
-      <label for="edit-nome">Nome:</label>
-      <input id="edit-nome" [(ngModel)]="usuarioSelecionado.nome" name="nome" required />
-
-      <label for="edit-email">Email:</label>
-      <input id="edit-email" [(ngModel)]="usuarioSelecionado.email" name="email" required />
-
-      <label for="edit-telefone">Telefone:</label>
-      <input id="edit-telefone" [(ngModel)]="usuarioSelecionado.telefone" name="telefone" required />
-
-      <button type="submit">Salvar</button>
-    </form>
-  </div>
+  <h2>Lista de Usuários</h2>
+  <ul>
+    <li *ngFor="let usuario of usuarios">
+      {{ usuario.nome }} - {{ usuario.email }} - {{ usuario.telefone }}
+    </li>
+  </ul>
 </div>
