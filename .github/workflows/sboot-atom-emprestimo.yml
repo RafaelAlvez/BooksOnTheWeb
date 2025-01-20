@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - 'main'
+    paths:
+      - 'sboot-atom-emprestimo/**'
   pull_request:
     branches:
       - 'main'
+    paths:
+      - 'sboot-atom-emprestimo/**'
   workflow_dispatch:
 
 jobs:
