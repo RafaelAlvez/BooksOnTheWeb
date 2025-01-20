@@ -1,4 +1,4 @@
-gitname: CI Workflow - livros
+name: CI Workflow - Livros
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
 jobs:
   buildAndDeploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
