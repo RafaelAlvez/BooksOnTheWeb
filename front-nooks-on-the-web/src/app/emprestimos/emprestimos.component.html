@@ -1,0 +1,31 @@
+<div class="emprestimos-container">
+  <h1>Gestão de Empréstimos</h1>
+
+  <div>
+    <h2>Criar Novo Empréstimo</h2>
+    <form (submit)="emprestar()">
+      <label for="idUsuario">ID do Usuário:</label>
+      <input id="idUsuario" [(ngModel)]="novoEmprestimo.idUsuario" name="idUsuario" required />
+
+      <label for="idLivro">ID do Livro:</label>
+      <input id="idLivro" [(ngModel)]="novoEmprestimo.idLivro" name="idLivro" required />
+
+      <label for="dataDevolucao">Data de Devolução:</label>
+      <input id="dataDevolucao" type="datetime-local" [(ngModel)]="novoEmprestimo.dataDevolucao" name="dataDevolucao" required />
+
+      <button type="submit">Criar Empréstimo</button>
+    </form>
+  </div>
+
+  <div>
+    <h2>Lista de Empréstimos</h2>
+    <ul>
+      <li *ngFor="let emprestimo of emprestimos">
+        <strong>{{ emprestimo.livro.titulo }}</strong> ({{ emprestimo.livro.autor }}) - Usuário: {{ emprestimo.idUsuario }}
+        <br />
+        Data de Devolução: {{ emprestimo.dataDevolucao | date:'short' }} - Status: {{ emprestimo.devolvido ? 'Devolvido' : 'Pendente' }}
+        <button (click)="devolver(emprestimo.id)">Devolver</button>
+      </li>
+    </ul>
+  </div>
+</div>
