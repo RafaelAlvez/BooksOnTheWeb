@@ -1,0 +1,24 @@
+<div class="link-home">
+  <a routerLink="/">← Voltar para a Tela Inicial</a>
+</div>
+
+<div class="penalidades-container">
+  <h1>Verificação de Penalidades</h1>
+
+  <div *ngIf="mensagemErro" class="alert alert-danger">{{ mensagemErro }}</div>
+
+  <form (submit)="verificarPenalidade()">
+    <label for="idUsuario">ID do Usuário:</label>ç
+    <input id="idUsuario" [(ngModel)]="idUsuario" name="idUsuario" required />
+    <button type="submit">Verificar Penalidade</button>
+  </form>
+
+  <div *ngIf="penalidade">
+    <h2>Detalhes da Penalidade</h2>
+    <p><strong>Usuário:</strong> {{ penalidade.usuario.nome }}</p>
+    <p><strong>Email:</strong> {{ penalidade.usuario.email }}</p>
+    <p><strong>Telefone:</strong> {{ penalidade.usuario.telefone }}</p>
+    <p><strong>Valor:</strong> R$ {{ penalidade.valor }}</p>
+    <p><strong>Data de Aplicação:</strong> {{ penalidade.dataAplicacao | date:'shortDate' }}</p>
+  </div>
+</div>

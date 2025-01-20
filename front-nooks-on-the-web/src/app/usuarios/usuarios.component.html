@@ -1,0 +1,71 @@
+<div class="link-home">
+  <a routerLink="/">← Voltar para a Tela Inicial</a>
+</div>
+
+<div class="container">
+  <h1>Gerenciamento de Usuários</h1>
+
+  <div *ngIf="mensagemErro" class="alert alert-danger">{{ mensagemErro }}</div>
+  <div *ngIf="mensagemSucesso" class="alert alert-success">{{ mensagemSucesso }}</div>
+
+  <form (submit)="adicionarUsuario()" *ngIf="!usuarioSelecionado">
+    <h2>Adicionar Novo Usuário</h2>
+    <label for="nome">Nome:</label>
+    <input id="nome" type="text" [(ngModel)]="novoUsuario.nome" name="nome" required />
+
+    <label for="email">Email:</label>
+    <input id="email" type="email" [(ngModel)]="novoUsuario.email" name="email" required />
+
+    <label for="telefone">Telefone:</label>
+    <input id="telefone" type="text" [(ngModel)]="novoUsuario.telefone" name="telefone" required />
+
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <form (submit)="atualizarUsuario()" *ngIf="usuarioSelecionado">
+    <h2>Atualizar Usuário</h2>
+    <label for="edit-nome">Nome:</label>
+    <input id="edit-nome" type="text" [(ngModel)]="usuarioSelecionado.nome" name="edit-nome" required />
+
+    <label for="edit-email">Email:</label>
+    <input id="edit-email" type="email" [(ngModel)]="usuarioSelecionado.email" name="edit-email" required />
+
+    <label for="edit-telefone">Telefone:</label>
+    <input id="edit-telefone" type="text" [(ngModel)]="usuarioSelecionado.telefone" name="edit-telefone" required />
+
+    <button type="submit">Salvar</button>
+    <button type="button" (click)="usuarioSelecionado = null">Cancelar</button>
+  </form>
+
+  <h2>Lista de Usuários</h2>
+
+  <div class="table-container" *ngIf="usuarios.length > 0">
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let usuario of usuarios">
+        <td>{{ usuario.idUsuario }}</td>
+        <td>{{ usuario.nome }}</td>
+        <td>{{ usuario.email }}</td>
+        <td>{{ usuario.telefone }}</td>
+        <td>
+          <button (click)="selecionarUsuario(usuario)">Editar</button>
+          <button (click)="deletarUsuario(usuario.idUsuario)">Excluir</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="usuarios.length === 0">
+    <p class="no-users">Nenhum usuário encontrado.</p>
+  </div>
+</div>
