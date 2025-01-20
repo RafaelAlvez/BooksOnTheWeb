@@ -7,8 +7,49 @@ spring:
       on-profile: docker
   application:
     name: sboot.atom.livros
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: "none"
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: "org.hibernate.dialect.H2Dialect"
+        format_sql: false
   datasource:
     url: jdbc:postgresql://db:5432/booksontheweb
     username: admin
     password: admin123
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 20000
+      minimum-idle: 2
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
+        virtual-host: /
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: "*"
+      endpoint:
+        health:
+          probes:
+            enabled: true
+          show-details: always
+          access: read_only
+    logging:
+      level:
+        org:
+          springframework:
+            jdbc:
+              core:
+                JdbcTemplate: INFO
+                StatementCreatorUtils: INFO

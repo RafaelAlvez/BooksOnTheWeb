@@ -34,6 +34,8 @@ spring:
     username: guest
     password: guest
     virtual-host: /
+    listener:
+      missing-queues-fatal: false
 management:
   endpoints:
     web:
