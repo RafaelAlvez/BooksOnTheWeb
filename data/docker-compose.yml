@@ -36,4 +36,4 @@ volumes:
 
 networks:
   books-network:
-    external: true
+    name: books-network
