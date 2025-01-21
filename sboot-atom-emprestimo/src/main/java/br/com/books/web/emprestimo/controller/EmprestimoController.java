@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/emprestimos")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class EmprestimoController {
 
