@@ -10,15 +10,6 @@ Além disso, utiliza RabbitMQ e um banco de dados Postegre configurados através
 
 ---
 
-## 🛠️ Execute o Script de Rede
-
-Navegue até a pasta network e execute o script de rede para configurar a network necessária:
-
-- cd network
-- ./run.sh
-
----
-
 ## 🚀 Inicialize os Serviços de Banco de Dados e RabbitMQ
 
 - cd ../data
