@@ -1,10 +1,11 @@
 # BooksOnTheWeb
 
-Este projeto é composto por três serviços Java Spring Boot 21:
+Este projeto é composto por três serviços Java Spring Boot 21 e uma inteface web em Angular 18:
 
 - **sboot-atom-emprestimo**
 - **sboot-atom-livros**
 - **sboot-atom-usuarios**
+- **front-books-on-the-web**
 
 Além disso, utiliza RabbitMQ e um banco de dados Postegre configurados através do Docker Compose. Para garantir a inicialização correta, siga os passos:
 
