@@ -8,19 +8,52 @@
   <div *ngIf="mensagemErro" class="alert alert-danger">{{ mensagemErro }}</div>
   <div *ngIf="mensagemSucesso" class="alert alert-success">{{ mensagemSucesso }}</div>
 
-  <form (submit)="adicionarUsuario()" *ngIf="!usuarioSelecionado">
+  <form (submit)="adicionarUsuario()" #usuarioForm="ngForm">
     <h2>Adicionar Novo Usuário</h2>
+
     <label for="nome">Nome:</label>
-    <input id="nome" type="text" [(ngModel)]="novoUsuario.nome" name="nome" required />
+    <input
+      id="nome"
+      type="text"
+      [(ngModel)]="novoUsuario.nome"
+      name="nome"
+      required
+      #nomeInput="ngModel"
+      [placeholder]="nomeInput.invalid && nomeInput.touched ? 'Nome é obrigatório' : 'Digite o nome'"
+      class="form-control"
+      [ngClass]="{ 'error-input': nomeInput.invalid && nomeInput.touched }"
+    />
 
     <label for="email">Email:</label>
-    <input id="email" type="email" [(ngModel)]="novoUsuario.email" name="email" required />
+    <input
+      id="email"
+      type="email"
+      [(ngModel)]="novoUsuario.email"
+      name="email"
+      required
+      #emailInput="ngModel"
+      [placeholder]="emailInput.invalid && emailInput.touched ? 'Email é obrigatório' : 'Digite o email'"
+      class="form-control"
+      [ngClass]="{ 'error-input': emailInput.invalid && emailInput.touched }"
+    />
 
     <label for="telefone">Telefone:</label>
-    <input id="telefone" type="text" [(ngModel)]="novoUsuario.telefone" name="telefone" required />
+    <input
+      id="telefone"
+      type="text"
+      [(ngModel)]="novoUsuario.telefone"
+      name="telefone"
+      required
+      #telefoneInput="ngModel"
+      [placeholder]="telefoneInput.invalid && telefoneInput.touched ? 'Telefone é obrigatório' : 'Digite o telefone'"
+      class="form-control"
+      [ngClass]="{ 'error-input': telefoneInput.invalid && telefoneInput.touched }"
+    />
 
-    <button type="submit">Adicionar</button>
+    <button type="submit" [disabled]="usuarioForm.invalid">Adicionar</button>
   </form>
+
+
 
   <form (submit)="atualizarUsuario()" *ngIf="usuarioSelecionado">
     <h2>Atualizar Usuário</h2>

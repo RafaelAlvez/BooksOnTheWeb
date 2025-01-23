@@ -18,7 +18,7 @@ export interface PenalidadeDTO {
   providedIn: 'root',
 })
 export class PenalidadeService {
-  private apiUrl = 'http://localhost:8080/v1/penalidades';
+  private apiUrl = 'http://localhost:8087/v1/penalidades';
 
   constructor(private http: HttpClient) {}
 

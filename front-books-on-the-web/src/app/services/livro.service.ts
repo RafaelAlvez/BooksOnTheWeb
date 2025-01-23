@@ -14,7 +14,7 @@ export interface LivroDTO {
   providedIn: 'root',
 })
 export class LivroService {
-  private apiUrl = 'http://localhost:8081/dev-book-web/v1/livros';
+  private apiUrl = 'http://localhost:8085/v1/livros';
 
   constructor(private http: HttpClient) {}
 

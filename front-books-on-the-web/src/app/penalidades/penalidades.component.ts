@@ -12,30 +12,31 @@ import { PenalidadeService, PenalidadeDTO } from '../services/penalidade.service
   styleUrls: ['./penalidades.component.css'],
 })
 export class PenalidadesComponent {
+  penalidades: PenalidadeDTO[] = [];
   idUsuario: number | null = null;
-  penalidade: PenalidadeDTO | null = null;
   mensagemErro: string | null = null;
 
   constructor(private penalidadeService: PenalidadeService) {}
 
   verificarPenalidade(): void {
-    if (this.idUsuario !== null) {
-      this.mensagemErro = null;
-
-      this.penalidadeService.verificarPenalidade(this.idUsuario).subscribe({
-        next: (data) => {
-          this.penalidade = data;
-          this.mensagemErro = null;
-        },
-        error: (err) => {
-          if (err.status === 404) {
-            this.mensagemErro = 'Penalidade não encontrada para este usuário.';
-          } else {
-            this.mensagemErro = 'Erro ao buscar penalidade. Tente novamente.';
-          }
-          this.penalidade = null;
-        },
-      });
+    if (!this.idUsuario || this.idUsuario <= 0) {
+      this.mensagemErro = 'Por favor, insira um ID de usuário válido.';
+      return;
     }
+
+    this.mensagemErro = null;
+    this.penalidadeService.verificarPenalidade(this.idUsuario).subscribe({
+      next: (data) => {
+        this.penalidades = [data];
+      },
+      error: (err) => {
+        if (err.status === 404) {
+          this.mensagemErro = 'Penalidade não encontrada para este usuário.';
+        } else {
+          this.mensagemErro = 'Erro ao buscar penalidade. Tente novamente.';
+        }
+        this.penalidades = [];
+      },
+    });
   }
 }

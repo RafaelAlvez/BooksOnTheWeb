@@ -34,7 +34,7 @@ export interface DevolucaoResponseDTO {
   providedIn: 'root',
 })
 export class EmprestimoService {
-  private apiUrl = 'http://localhost:8080/v1/emprestimos';
+  private apiUrl = 'http://localhost:8087/v1/emprestimos';
 
   constructor(private http: HttpClient) {}
 

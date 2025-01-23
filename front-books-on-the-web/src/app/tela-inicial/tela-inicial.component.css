@@ -21,3 +21,88 @@ nav a {
 nav a:hover {
   text-decoration: underline;
 }
+
+/* Container principal */
+.tela-inicial-container {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 40px auto;
+}
+
+/* Título */
+.tela-inicial-container h1 {
+  font-size: 28px;
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+/* Texto de descrição */
+.tela-inicial-container p {
+  font-size: 16px;
+  color: #6c757d;
+  margin-bottom: 30px;
+}
+
+/* Container de links */
+.links-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* Links estilizados */
+.nav-link {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 12px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+  min-width: 180px;
+}
+
+.nav-link:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.nav-link:active {
+  transform: scale(1);
+}
+
+/* Campo com erro */
+.error-input {
+  border: 2px solid #dc3545;
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.error-input::placeholder {
+  color: #842029;
+}
+
+/* Campos normais */
+.form-control {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+  width: 100%;
+  margin-bottom: 15px;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.25);
+}
+

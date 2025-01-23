@@ -6,19 +6,48 @@
   <h1>Verificação de Penalidades</h1>
 
   <div *ngIf="mensagemErro" class="alert alert-danger">{{ mensagemErro }}</div>
-
-  <form (submit)="verificarPenalidade()">
-    <label for="idUsuario">ID do Usuário:</label>ç
-    <input id="idUsuario" [(ngModel)]="idUsuario" name="idUsuario" required />
-    <button type="submit">Verificar Penalidade</button>
+  <form (submit)="verificarPenalidade()" #penalidadeForm="ngForm">
+    <h2>Pesquisar Penalidade</h2>
+    <label for="idUsuario">ID do Usuário:</label>
+    <input
+      id="idUsuario"
+      type="number"
+      [(ngModel)]="idUsuario"
+      name="idUsuario"
+      required
+      #idUsuarioInput="ngModel"
+    />
+    <!-- Mensagem de erro -->
+    <div *ngIf="idUsuarioInput.invalid && idUsuarioInput.touched" class="error-message">
+      O ID do Usuário é obrigatório e deve ser um número válido.
+    </div>
+    <button type="submit" [disabled]="penalidadeForm.invalid">Verificar Penalidade</button>
   </form>
 
-  <div *ngIf="penalidade">
-    <h2>Detalhes da Penalidade</h2>
-    <p><strong>Usuário:</strong> {{ penalidade.usuario.nome }}</p>
-    <p><strong>Email:</strong> {{ penalidade.usuario.email }}</p>
-    <p><strong>Telefone:</strong> {{ penalidade.usuario.telefone }}</p>
-    <p><strong>Valor:</strong> R$ {{ penalidade.valor }}</p>
-    <p><strong>Data de Aplicação:</strong> {{ penalidade.dataAplicacao | date:'shortDate' }}</p>
+  <h2>Lista de Penalidades</h2>
+
+  <div class="table-container" *ngIf="penalidades.length > 0">
+    <table>
+      <thead>
+      <tr>
+        <th>ID Penalidade</th>
+        <th>Usuário</th>
+        <th>Valor</th>
+        <th>Data de Aplicação</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let penalidade of penalidades">
+        <td>{{ penalidade.id }}</td>
+        <td>{{ penalidade.usuario.nome }}</td>
+        <td>R$ {{ penalidade.valor }}</td>
+        <td>{{ penalidade.dataAplicacao | date: 'short' }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="penalidades.length === 0">
+    <p class="no-penalties">Nenhuma penalidade encontrada.</p>
   </div>
 </div>

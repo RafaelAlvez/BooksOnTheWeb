@@ -24,6 +24,7 @@ export class LivrosComponent implements OnInit {
   }
 
   carregarLivros(): void {
+    this.mensagemErro = null;
     this.livroService.listarLivros().subscribe({
       next: (data) => (this.livros = data),
       error: () => (this.mensagemErro = 'Erro ao carregar a lista de livros.'),

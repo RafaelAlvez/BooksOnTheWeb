@@ -8,30 +8,95 @@
   <div *ngIf="mensagemErro" class="alert alert-danger">{{ mensagemErro }}</div>
   <div *ngIf="mensagemSucesso" class="alert alert-success">{{ mensagemSucesso }}</div>
 
-  <form (submit)="adicionarLivro()">
+  <form (submit)="adicionarLivro()" #livroForm="ngForm">
     <h2>Adicionar Novo Livro</h2>
+
     <label for="titulo">Título:</label>
-    <input id="titulo" [(ngModel)]="novoLivro.titulo" name="titulo" required />
+    <input
+      id="titulo"
+      type="text"
+      [(ngModel)]="novoLivro.titulo"
+      name="titulo"
+      required
+      #tituloInput="ngModel"
+      [placeholder]="tituloInput.invalid && tituloInput.touched ? 'Título é obrigatório' : 'Digite o título'"
+      class="form-control"
+      [ngClass]="{ 'error-input': tituloInput.invalid && tituloInput.touched }"
+    />
 
     <label for="autor">Autor:</label>
-    <input id="autor" [(ngModel)]="novoLivro.autor" name="autor" required />
+    <input
+      id="autor"
+      type="text"
+      [(ngModel)]="novoLivro.autor"
+      name="autor"
+      required
+      #autorInput="ngModel"
+      [placeholder]="autorInput.invalid && autorInput.touched ? 'Autor é obrigatório' : 'Digite o autor'"
+      class="form-control"
+      [ngClass]="{ 'error-input': autorInput.invalid && autorInput.touched }"
+    />
 
     <label for="genero">Gênero:</label>
-    <input id="genero" [(ngModel)]="novoLivro.genero" name="genero" required />
+    <input
+      id="genero"
+      type="text"
+      [(ngModel)]="novoLivro.genero"
+      name="genero"
+      required
+      #generoInput="ngModel"
+      [placeholder]="generoInput.invalid && generoInput.touched ? 'Gênero é obrigatório' : 'Digite o gênero'"
+      class="form-control"
+      [ngClass]="{ 'error-input': generoInput.invalid && generoInput.touched }"
+    />
 
     <label for="status">Status:</label>
-    <select id="status" [(ngModel)]="novoLivro.status" name="status">
+    <select
+      id="status"
+      [(ngModel)]="novoLivro.status"
+      name="status"
+      required
+      #statusInput="ngModel"
+      class="form-control"
+      [ngClass]="{ 'error-input': statusInput.invalid && statusInput.touched }"
+    >
+      <option value="" disabled selected hidden>Selecione o status</option>
       <option value="DISPONIVEL">Disponível</option>
       <option value="INDISPONIVEL">Indisponível</option>
     </select>
 
-    <button type="submit">Adicionar Livro</button>
+    <button type="submit" [disabled]="livroForm.invalid">Adicionar Livro</button>
   </form>
 
+
+
   <h2>Lista de Livros</h2>
-  <ul>
-    <li *ngFor="let livro of livros">
-      {{ livro.titulo }} por {{ livro.autor }} ({{ livro.genero }}) - {{ livro.status }}
-    </li>
-  </ul>
+
+  <!-- Tabela estilizada -->
+  <div class="table-container" *ngIf="livros.length > 0">
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>Gênero</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let livro of livros">
+        <td>{{ livro.id }}</td>
+        <td>{{ livro.titulo }}</td>
+        <td>{{ livro.autor }}</td>
+        <td>{{ livro.genero }}</td>
+        <td>{{ livro.status }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="livros.length === 0">
+    <p class="no-books">Nenhum livro encontrado.</p>
+  </div>
 </div>

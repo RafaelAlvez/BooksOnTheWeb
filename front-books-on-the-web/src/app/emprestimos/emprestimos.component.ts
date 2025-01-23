@@ -24,6 +24,7 @@ export class EmprestimosComponent implements OnInit {
   }
 
   carregarEmprestimos(): void {
+    this.mensagemErro = null;
     this.emprestimoService.listarEmprestimos().subscribe({
       next: (data) => (this.emprestimos = data),
       error: () => (this.mensagemErro = 'Erro ao carregar os empréstimos.'),
@@ -47,17 +48,21 @@ export class EmprestimosComponent implements OnInit {
   }
 
   devolver(id: number): void {
-    this.mensagemErro = null;
-    this.mensagemSucesso = null;
+    const confirmacao = confirm('Você tem certeza de que deseja devolver este livro?');
+    if (confirmacao) {
+      this.mensagemErro = null;
+      this.mensagemSucesso = null;
 
-    this.emprestimoService.devolver(id).subscribe({
-      next: () => {
-        this.carregarEmprestimos();
-        this.mensagemSucesso = 'Livro devolvido com sucesso!';
-      },
-      error: () => {
-        this.mensagemErro = 'Erro ao devolver o livro. Tente novamente.';
-      },
-    });
+      this.emprestimoService.devolver(id).subscribe({
+        next: () => {
+          this.carregarEmprestimos();
+          this.mensagemSucesso = 'Livro devolvido com sucesso!';
+        },
+        error: () => {
+          this.mensagemErro = 'Erro ao devolver o livro. Tente novamente.';
+        },
+      });
+    }
   }
+
 }
